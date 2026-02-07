@@ -1,0 +1,110 @@
+.scene-bar {
+  position: absolute;
+  bottom: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 5px 8px;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.2s;
+}
+
+.scene-bar.transitioning {
+  opacity: 0.6;
+}
+
+.scene-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scene-item {
+  width: 32px;
+  height: 24px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 6px;
+  background: var(--bg-surface-solid);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.scene-item:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.scene-item.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+.scene-number {
+  font-variant-numeric: tabular-nums;
+}
+
+.scene-add {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.scene-add:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.scene-add svg {
+  width: 14px;
+  height: 14px;
+}
+
+.scene-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid var(--border);
+}
+
+.scene-action-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.scene-action-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-secondary);
+}
+
+.scene-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.scene-delete:hover {
+  color: var(--accent-record);
+}

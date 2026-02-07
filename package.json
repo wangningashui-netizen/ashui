@@ -1,13 +1,41 @@
 {
   "name": "ashui",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Draw. Speak. Record. — Whiteboard video recording tool",
   "type": "module",
+  "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron:dev": "VITE_DEV_SERVER_URL=http://localhost:3000 electron .",
+    "electron:build": "npm run build && electron-builder",
+    "electron:preview": "electron ."
+  },
+  "build": {
+    "appId": "com.ashui.app",
+    "productName": "ashui",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "public/favicon.svg"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/favicon.svg"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "public/favicon.svg"
+    }
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
@@ -20,6 +48,8 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

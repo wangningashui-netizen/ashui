@@ -46,7 +46,7 @@ export function SettingsPanel({
       <div className="settings-panel" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="settings-header">
-          <h2>Recording Settings</h2>
+          <h2>Settings</h2>
           <button className="settings-close" onClick={onClose}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18" />

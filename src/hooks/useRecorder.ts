@@ -95,7 +95,7 @@ export function useRecorder({
       const a = document.createElement("a");
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
       a.href = url;
-      a.download = `excalicord-${timestamp}.webm`;
+      a.download = `ashui-${timestamp}.webm`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
