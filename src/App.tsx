@@ -6,6 +6,7 @@ import { CountdownOverlay } from "./components/CountdownOverlay";
 import { SettingsPanel } from "./components/SettingsPanel";
 import { Teleprompter } from "./components/Teleprompter";
 import { SceneBar } from "./components/SceneBar";
+import { RecordingFrame } from "./components/RecordingFrame";
 import { useWebcam } from "./hooks/useWebcam";
 import { useRecorder } from "./hooks/useRecorder";
 import { useCompositor } from "./hooks/useCompositor";
@@ -18,6 +19,7 @@ import "./App.css";
 import "./components/SettingsPanel.css";
 import "./components/Teleprompter.css";
 import "./components/SceneBar.css";
+import "./components/RecordingFrame.css";
 
 function GearIcon() {
   return (
@@ -259,6 +261,12 @@ function App() {
             position={webcamPosition}
             onPositionChange={setWebcamPosition}
             size={settings.cameraSize}
+          />
+
+          {/* Recording frame preview — hidden during recording */}
+          <RecordingFrame
+            settings={settings}
+            visible={recordingState === "idle"}
           />
 
           {laser.active && (
