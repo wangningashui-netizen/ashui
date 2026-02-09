@@ -17,33 +17,42 @@ export function SceneBar({
   onDeleteScene,
   onDuplicateScene,
 }: SceneBarProps) {
-  if (scenes.length <= 1 && false) return null; // Always show for discoverability
-
   return (
-    <div className={`scene-bar ${transitioning ? "transitioning" : ""}`}>
-      <div className="scene-list">
+    <div className={`page-sidebar ${transitioning ? "transitioning" : ""}`}>
+      <div className="page-sidebar-header">
+        <span className="page-sidebar-title">Pages</span>
+        <span className="page-count">{scenes.length}</span>
+      </div>
+
+      <div className="page-list">
         {scenes.map((scene, i) => (
           <button
             key={scene.id}
-            className={`scene-item ${i === currentIndex ? "active" : ""}`}
+            className={`page-thumb ${i === currentIndex ? "active" : ""}`}
             onClick={() => onGoToScene(i)}
             title={scene.name}
           >
-            <span className="scene-number">{i + 1}</span>
+            <span className="page-number">{i + 1}</span>
           </button>
         ))}
-        <button className="scene-item scene-add" onClick={onAddScene} title="Add scene (Ctrl+M)">
+
+        <button
+          className="page-thumb page-add"
+          onClick={onAddScene}
+          title="New page (Ctrl+M)"
+        >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
       </div>
-      <div className="scene-actions">
+
+      <div className="page-sidebar-actions">
         <button
-          className="scene-action-btn"
+          className="page-action-btn"
           onClick={onDuplicateScene}
-          title="Duplicate current scene"
+          title="Duplicate current page"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -52,9 +61,9 @@ export function SceneBar({
         </button>
         {scenes.length > 1 && (
           <button
-            className="scene-action-btn scene-delete"
+            className="page-action-btn page-delete"
             onClick={() => onDeleteScene(currentIndex)}
-            title="Delete current scene"
+            title="Delete current page"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <polyline points="3 6 5 6 21 6" />

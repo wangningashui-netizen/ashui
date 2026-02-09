@@ -1,9 +1,9 @@
-/* Settings overlay */
+/* ─── Settings overlay ─── */
 .settings-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(45, 40, 35, 0.3);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -11,29 +11,23 @@
   padding: 16px;
 }
 
-/* Settings panel - right-side drawer style */
+/* ─── Settings panel — right-side drawer ─── */
 .settings-panel {
   width: 420px;
   max-width: 95vw;
   height: calc(100vh - 32px);
-  background: #faf8f5;
-  border-radius: 20px;
+  background: var(--bg-surface-solid);
+  border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
-  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-xl);
   overflow: hidden;
   animation: slide-in 0.25s ease-out;
 }
 
 @keyframes slide-in {
-  from {
-    transform: translateX(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 /* Header */
@@ -42,13 +36,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 28px 16px;
-  border-bottom: 1px solid #e5e2dc;
+  border-bottom: 1px solid var(--border);
 }
 
 .settings-header h2 {
   font-size: 22px;
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
@@ -56,8 +50,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-canvas);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -66,13 +60,13 @@
 }
 
 .settings-close:hover {
-  background: #f0f0f0;
+  background: var(--bg-surface-hover);
 }
 
 .settings-close svg {
   width: 16px;
   height: 16px;
-  stroke: #666;
+  stroke: var(--text-secondary);
 }
 
 /* Body */
@@ -91,14 +85,14 @@
 }
 
 .settings-body::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--border);
   border-radius: 3px;
 }
 
 /* Section */
 .settings-section {
   padding: 20px 0;
-  border-bottom: 1px solid #e5e2dc;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .settings-section:last-child {
@@ -110,7 +104,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #999;
+  color: var(--text-muted);
   margin-bottom: 14px;
 }
 
@@ -123,9 +117,9 @@
 
 .aspect-btn {
   padding: 12px 8px;
-  border: 1.5px solid #ddd;
-  border-radius: 12px;
-  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-canvas);
   cursor: pointer;
   text-align: center;
   transition: all 0.15s;
@@ -136,13 +130,13 @@
 }
 
 .aspect-btn:hover {
-  border-color: #bbb;
-  background: #fafafa;
+  border-color: var(--accent);
+  background: var(--accent-light);
 }
 
 .aspect-btn.active {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -170,28 +164,29 @@
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .custom-size-inputs input {
   width: 80px;
   padding: 6px 10px;
-  border: 1.5px solid #ddd;
-  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
   font-size: 13px;
   font-family: inherit;
-  background: #fff;
-  color: #1a1a1a;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
 }
 
 .custom-size-inputs input:focus {
   outline: none;
-  border-color: #1a1a1a;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
 }
 
 .size-x {
   font-size: 13px;
-  color: #999;
+  color: var(--text-muted);
   font-weight: 600;
 }
 
@@ -205,24 +200,24 @@
 
 .cat-btn {
   padding: 6px 14px;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid var(--border);
   border-radius: 20px;
-  background: #fff;
+  background: var(--bg-canvas);
   font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
 }
 
 .cat-btn:hover {
-  border-color: #bbb;
+  border-color: var(--accent);
 }
 
 .cat-btn.active {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -230,12 +225,12 @@
 .random-wallpaper-btn {
   width: 100%;
   padding: 10px;
-  border: 1.5px solid #ddd;
-  border-radius: 12px;
-  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-canvas);
   font-size: 13px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--text-primary);
   cursor: pointer;
   margin-bottom: 12px;
   font-family: inherit;
@@ -247,8 +242,8 @@
 }
 
 .random-wallpaper-btn:hover {
-  background: #f5f5f5;
-  border-color: #bbb;
+  background: var(--bg-surface-hover);
+  border-color: var(--accent);
 }
 
 .sparkle {
@@ -270,13 +265,13 @@
 }
 
 .wallpaper-grid::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--border);
   border-radius: 2px;
 }
 
 .wallpaper-item {
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: var(--radius);
   border: 2.5px solid transparent;
   cursor: pointer;
   transition: all 0.15s;
@@ -286,11 +281,12 @@
 
 .wallpaper-item:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .wallpaper-item.selected {
-  border-color: #1a1a1a;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
 }
 
 .wallpaper-check {
@@ -299,7 +295,7 @@
   left: 4px;
   width: 22px;
   height: 22px;
-  background: #22c55e;
+  background: var(--accent-green);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -317,7 +313,7 @@
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: #ddd;
+  background: var(--border-light);
   border-radius: 3px;
   outline: none;
   margin: 8px 0;
@@ -329,33 +325,33 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #1a1a1a;
+  background: var(--accent);
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .settings-slider::-moz-range-thumb {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #1a1a1a;
+  background: var(--accent);
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .slider-labels {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: #999;
+  color: var(--text-muted);
   margin-top: 2px;
 }
 
 .slider-value-label {
   font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
@@ -367,7 +363,7 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--text-primary);
   margin-bottom: 12px;
 }
 
@@ -375,7 +371,7 @@
   width: 44px;
   height: 24px;
   border-radius: 12px;
-  background: #ccc;
+  background: var(--border);
   position: relative;
   cursor: pointer;
   transition: background 0.2s;
@@ -383,7 +379,7 @@
 }
 
 .toggle-switch.on {
-  background: #1a1a1a;
+  background: var(--accent);
 }
 
 .toggle-thumb {
@@ -395,7 +391,7 @@
   top: 2px;
   left: 2px;
   transition: transform 0.2s;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-sm);
 }
 
 .toggle-switch.on .toggle-thumb {
@@ -413,7 +409,7 @@
 .cursor-color-label {
   font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -436,31 +432,6 @@
 }
 
 .cursor-color-btn.selected {
-  border-color: #1a1a1a;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1a1a1a;
-}
-
-/* Settings gear button in top bar */
-.settings-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.settings-btn:hover {
-  background: var(--bg-surface-hover);
-  color: var(--text-primary);
-}
-
-.settings-btn svg {
-  width: 18px;
-  height: 18px;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent);
 }

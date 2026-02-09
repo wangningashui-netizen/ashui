@@ -10,7 +10,7 @@ function createWindow() {
     minWidth: 800,
     minHeight: 600,
     title: "ashui",
-    backgroundColor: "#0b0b0e",
+    backgroundColor: "#f5f0e8",
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

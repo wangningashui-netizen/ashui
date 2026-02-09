@@ -1,79 +1,104 @@
+/* ─── Layout ─── */
 .app-container {
   width: 100vw;
   height: 100vh;
-  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
-/* Excalidraw wrapper */
-.whiteboard-container {
+.main-layout {
   flex: 1;
-  position: relative;
+  display: flex;
   overflow: hidden;
 }
 
-/* Scene transition fade */
-.whiteboard-container.scene-transitioning {
-  opacity: 0.4;
+.canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-canvas);
+}
+
+/* ─── Whiteboard ─── */
+.whiteboard-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
   transition: opacity 0.15s ease;
 }
 
-/* Top bar — minimal, warm */
-.top-bar {
-  position: absolute;
-  top: 10px;
-  right: 14px;
+.whiteboard-container.scene-transitioning {
+  opacity: 0.4;
+}
+
+/* ─── Top Toolbar — GoodNotes style full-width bar ─── */
+.toolbar {
+  height: 48px;
+  background: var(--bg-surface-solid);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  flex-shrink: 0;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 6px 12px;
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
 }
 
-.top-bar .brand {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: 0.02em;
+.toolbar-left,
+.toolbar-right {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   user-select: none;
+  padding: 0 4px;
 }
 
-.top-bar .brand-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0b0b0e;
-  font-size: 11px;
+  color: #fff;
+  font-size: 13px;
   font-weight: 900;
+  box-shadow: var(--shadow-sm);
 }
 
-.top-bar .separator {
+.brand-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.toolbar-sep {
   width: 1px;
-  height: 16px;
+  height: 20px;
   background: var(--border);
+  margin: 0 4px;
 }
 
 .toolbar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border: none;
-  border-radius: 7px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
@@ -87,28 +112,19 @@
 
 .toolbar-btn.active {
   color: var(--accent);
+  background: var(--accent-light);
 }
 
 .toolbar-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
-/* Recording controls — bottom center */
+/* ─── Recording Controls (inline in toolbar) ─── */
 .recording-controls {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 6px 12px;
-  backdrop-filter: blur(12px);
+  gap: 6px;
 }
 
 .control-btn {
@@ -116,7 +132,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
@@ -124,7 +140,7 @@
   font-weight: 600;
   color: var(--text-secondary);
   background: transparent;
-  padding: 7px;
+  padding: 6px;
 }
 
 .control-btn:hover {
@@ -140,13 +156,15 @@
 .control-btn.record-btn {
   background: var(--accent-record);
   color: #fff;
-  padding: 7px 16px;
-  border-radius: 8px;
-  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  gap: 5px;
+  box-shadow: 0 1px 4px rgba(229, 77, 77, 0.3);
 }
 
 .control-btn.record-btn:hover {
   background: var(--accent-record-hover);
+  box-shadow: 0 2px 8px rgba(229, 77, 77, 0.4);
 }
 
 .control-btn.record-btn.recording {
@@ -160,18 +178,19 @@
 
 .control-btn.stop-btn {
   background: var(--bg-surface-hover);
-  padding: 7px 14px;
-  border-radius: 8px;
-  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  gap: 5px;
   border: 1px solid var(--border);
+  color: var(--text-primary);
 }
 
 .control-btn.stop-btn:hover {
-  background: var(--border);
+  background: var(--border-light);
 }
 
 .control-btn.pause-btn {
-  padding: 7px;
+  padding: 6px;
 }
 
 .control-btn.active {
@@ -182,7 +201,7 @@
   font-size: 13px;
   font-weight: 700;
   color: var(--accent-record);
-  min-width: 52px;
+  min-width: 50px;
   text-align: center;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
@@ -190,7 +209,7 @@
 
 .controls-separator {
   width: 1px;
-  height: 24px;
+  height: 20px;
   background: var(--border);
   flex-shrink: 0;
 }
@@ -201,20 +220,21 @@
   gap: 2px;
 }
 
-/* Webcam bubble */
+/* ─── Webcam bubble ─── */
 .webcam-bubble {
   position: absolute;
   z-index: 90;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 24px var(--shadow);
+  border: 3px solid #fff;
+  box-shadow: var(--shadow-lg);
   cursor: grab;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .webcam-bubble:hover {
   border-color: var(--accent);
+  box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent-light);
 }
 
 .webcam-bubble.dragging {
@@ -230,7 +250,7 @@
   border-radius: 50%;
 }
 
-/* Composite canvas */
+/* ─── Hidden composite canvas ─── */
 .composite-canvas {
   position: absolute;
   top: 0;
@@ -240,7 +260,7 @@
   opacity: 0;
 }
 
-/* Countdown overlay */
+/* ─── Countdown overlay ─── */
 .countdown-overlay {
   position: fixed;
   inset: 0;
@@ -248,8 +268,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(45, 40, 35, 0.35);
+  backdrop-filter: blur(6px);
 }
 
 .countdown-number {
@@ -257,7 +277,7 @@
   font-weight: 900;
   color: var(--accent);
   animation: countdown-pop 1s ease-out;
-  text-shadow: 0 4px 40px rgba(200, 149, 108, 0.3);
+  text-shadow: 0 4px 40px rgba(52, 120, 246, 0.25);
 }
 
 @keyframes countdown-pop {
@@ -266,20 +286,20 @@
   100% { transform: scale(0.85); opacity: 0; }
 }
 
-/* Toast */
+/* ─── Toast ─── */
 .download-toast {
   position: fixed;
-  bottom: 72px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 200;
   background: var(--accent-green);
-  color: #000;
+  color: #fff;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   font-weight: 700;
   font-size: 13px;
-  box-shadow: 0 4px 20px rgba(107, 196, 144, 0.25);
+  box-shadow: var(--shadow-lg);
   animation: toast-in 0.3s ease-out;
 }
 
@@ -288,7 +308,7 @@
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* Laser pointer overlay (screen only, also drawn in compositor) */
+/* ─── Laser pointer ─── */
 .laser-dot {
   position: fixed;
   pointer-events: none;
@@ -301,25 +321,19 @@
   opacity: 0.9;
 }
 
-/* PiP hint */
-.pip-active-badge {
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  z-index: 100;
+/* ─── PiP badge (inline in toolbar) ─── */
+.pip-badge {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 5px 10px;
+  gap: 5px;
+  padding: 4px 10px;
   font-size: 10px;
   font-weight: 700;
   color: var(--accent-green);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  backdrop-filter: blur(12px);
+  letter-spacing: 0.06em;
+  background: rgba(52, 199, 89, 0.08);
+  border-radius: 20px;
 }
 
 .pip-dot {
@@ -333,17 +347,4 @@
 @keyframes pip-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
-}
-
-/* Keyboard shortcut hints */
-.shortcut-hint {
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--text-muted);
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1px 4px;
-  margin-left: 4px;
-  font-family: inherit;
 }

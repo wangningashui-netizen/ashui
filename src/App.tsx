@@ -58,7 +58,6 @@ function App() {
   const mousePosRef = useRef({ x: 0, y: 0 });
   const pipVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Track mouse position
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       mousePosRef.current = { x: e.clientX, y: e.clientY };
@@ -109,7 +108,6 @@ function App() {
     _startRecording();
   }, [startCompositor, _startRecording]);
 
-  // PiP helpers
   const closePip = useCallback(() => {
     if (document.pictureInPictureElement) {
       document.exitPictureInPicture().catch(() => {});
@@ -153,147 +151,132 @@ function App() {
     else openPip();
   }, [pipActive, openPip, closePip]);
 
-  // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
-
-      if (e.key === "m" && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        scenes.addScene();
-      }
-      if (e.key === "PageDown" || (e.key === "ArrowRight" && (e.ctrlKey || e.metaKey))) {
-        e.preventDefault();
-        scenes.nextScene();
-      }
-      if (e.key === "PageUp" || (e.key === "ArrowLeft" && (e.ctrlKey || e.metaKey))) {
-        e.preventDefault();
-        scenes.prevScene();
-      }
-      if (e.key === "t" && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        teleprompter.toggle();
-      }
-      if (e.key === " " && teleprompter.enabled) {
-        e.preventDefault();
-        teleprompter.toggleScroll();
-      }
+      if (e.key === "m" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); scenes.addScene(); }
+      if (e.key === "PageDown" || (e.key === "ArrowRight" && (e.ctrlKey || e.metaKey))) { e.preventDefault(); scenes.nextScene(); }
+      if (e.key === "PageUp" || (e.key === "ArrowLeft" && (e.ctrlKey || e.metaKey))) { e.preventDefault(); scenes.prevScene(); }
+      if (e.key === "t" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); teleprompter.toggle(); }
+      if (e.key === " " && teleprompter.enabled) { e.preventDefault(); teleprompter.toggleScroll(); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [scenes, teleprompter]);
 
-  // Suppress unused vars lint — laser.getTrail is used by compositor via mousePos+laser refs
   void laser.getTrail;
 
   return (
     <div className="app-container">
-      {/* Top toolbar */}
-      <div className="top-bar">
-        <div className="brand">
-          <div className="brand-icon">a</div>
-          ashui
+      {/* Unified top toolbar */}
+      <div className="toolbar">
+        <div className="toolbar-left">
+          <div className="brand">
+            <div className="brand-icon">a</div>
+            <span className="brand-name">ashui</span>
+          </div>
+          <div className="toolbar-sep" />
+          <button
+            className={`toolbar-btn ${teleprompter.enabled ? "active" : ""}`}
+            onClick={teleprompter.toggle}
+            title="Teleprompter (Ctrl+T)"
+          >
+            <TeleprompterIcon />
+          </button>
+          <button
+            className={`toolbar-btn ${pipActive ? "active" : ""}`}
+            onClick={togglePip}
+            title="Preview (PiP)"
+          >
+            <PipIcon />
+          </button>
         </div>
-        <div className="separator" />
-        <button
-          className={`toolbar-btn ${teleprompter.enabled ? "active" : ""}`}
-          onClick={teleprompter.toggle}
-          title="Teleprompter (Ctrl+T)"
-        >
-          <TeleprompterIcon />
-        </button>
-        <button
-          className={`toolbar-btn ${pipActive ? "active" : ""}`}
-          onClick={togglePip}
-          title="Preview (PiP)"
-        >
-          <PipIcon />
-        </button>
-        <button
-          className="toolbar-btn"
-          onClick={() => setSettingsOpen(true)}
-          title="Settings"
-        >
-          <GearIcon />
-        </button>
+
+        <div className="toolbar-right">
+          {pipActive && (
+            <div className="pip-badge">
+              <div className="pip-dot" />
+              Preview
+            </div>
+          )}
+
+          <RecordingControls
+            state={recordingState}
+            elapsed={elapsed}
+            webcamEnabled={webcamEnabled}
+            micEnabled={micEnabled}
+            onStartRecording={handleStartRecording}
+            onStopRecording={handleStopRecording}
+            onPauseRecording={pauseRecording}
+            onResumeRecording={resumeRecording}
+            onToggleWebcam={toggleWebcam}
+            onToggleMic={toggleMic}
+          />
+
+          <div className="toolbar-sep" />
+          <button
+            className="toolbar-btn"
+            onClick={() => setSettingsOpen(true)}
+            title="Settings"
+          >
+            <GearIcon />
+          </button>
+        </div>
       </div>
 
-      {/* PiP badge */}
-      {pipActive && (
-        <div className="pip-active-badge">
-          <div className="pip-dot" />
-          Preview
-        </div>
-      )}
-
-      {/* Excalidraw whiteboard */}
-      <div className={`whiteboard-container ${scenes.transitioning ? "scene-transitioning" : ""}`}>
-        <Excalidraw
-          theme="dark"
-          excalidrawAPI={(api: any) => {
-            scenes.excalidrawAPIRef.current = api;
-          }}
-          UIOptions={{
-            canvasActions: {
-              loadScene: false,
-              export: false,
-            },
-          }}
+      {/* Main content: sidebar + canvas */}
+      <div className="main-layout">
+        <SceneBar
+          scenes={scenes.scenes}
+          currentIndex={scenes.currentIndex}
+          transitioning={scenes.transitioning}
+          onGoToScene={scenes.goToScene}
+          onAddScene={scenes.addScene}
+          onDeleteScene={scenes.deleteScene}
+          onDuplicateScene={scenes.duplicateScene}
         />
+
+        <div className="canvas-area">
+          <div className={`whiteboard-container ${scenes.transitioning ? "scene-transitioning" : ""}`}>
+            <Excalidraw
+              theme="light"
+              excalidrawAPI={(api: any) => {
+                scenes.excalidrawAPIRef.current = api;
+              }}
+              UIOptions={{
+                canvasActions: {
+                  loadScene: false,
+                  export: false,
+                },
+              }}
+            />
+          </div>
+
+          <WebcamBubble
+            videoRef={videoRef}
+            enabled={webcamEnabled}
+            position={webcamPosition}
+            onPositionChange={setWebcamPosition}
+            size={settings.cameraSize}
+          />
+
+          {laser.active && (
+            <div
+              className="laser-dot"
+              style={{
+                left: mousePosRef.current.x,
+                top: mousePosRef.current.y,
+                background: laser.color,
+                color: laser.color,
+              }}
+            />
+          )}
+        </div>
       </div>
 
-      {/* Webcam bubble */}
-      <WebcamBubble
-        videoRef={videoRef}
-        enabled={webcamEnabled}
-        position={webcamPosition}
-        onPositionChange={setWebcamPosition}
-        size={settings.cameraSize}
-      />
-
-      {/* Laser pointer dot */}
-      {laser.active && (
-        <div
-          className="laser-dot"
-          style={{
-            left: mousePosRef.current.x,
-            top: mousePosRef.current.y,
-            background: laser.color,
-            color: laser.color,
-          }}
-        />
-      )}
-
-      {/* Hidden composite canvas */}
       <canvas ref={compositeCanvasRef} className="composite-canvas" />
 
-      {/* Scene bar */}
-      <SceneBar
-        scenes={scenes.scenes}
-        currentIndex={scenes.currentIndex}
-        transitioning={scenes.transitioning}
-        onGoToScene={scenes.goToScene}
-        onAddScene={scenes.addScene}
-        onDeleteScene={scenes.deleteScene}
-        onDuplicateScene={scenes.duplicateScene}
-      />
-
-      {/* Recording controls */}
-      <RecordingControls
-        state={recordingState}
-        elapsed={elapsed}
-        webcamEnabled={webcamEnabled}
-        micEnabled={micEnabled}
-        onStartRecording={handleStartRecording}
-        onStopRecording={handleStopRecording}
-        onPauseRecording={pauseRecording}
-        onResumeRecording={resumeRecording}
-        onToggleWebcam={toggleWebcam}
-        onToggleMic={toggleMic}
-      />
-
-      {/* Teleprompter (NOT recorded) */}
       {teleprompter.enabled && (
         <Teleprompter
           enabled={teleprompter.enabled}

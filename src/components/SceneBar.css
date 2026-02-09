@@ -1,91 +1,134 @@
-.scene-bar {
-  position: absolute;
-  bottom: 68px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 99;
+/* ─── Page Sidebar — GoodNotes-style vertical page navigator ─── */
+.page-sidebar {
+  width: 76px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
   display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 5px 8px;
-  backdrop-filter: blur(10px);
+  flex-direction: column;
+  flex-shrink: 0;
   transition: opacity 0.2s;
 }
 
-.scene-bar.transitioning {
+.page-sidebar.transitioning {
   opacity: 0.6;
 }
 
-.scene-list {
+.page-sidebar-header {
+  padding: 10px 0 6px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.scene-item {
-  width: 32px;
-  height: 24px;
-  border: 1.5px solid var(--border-light);
-  border-radius: 6px;
-  background: var(--bg-surface-solid);
-  color: var(--text-secondary);
+.page-sidebar-title {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.page-count {
   font-size: 11px;
   font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-surface-solid);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Page list */
+.page-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  scrollbar-width: none;
+}
+
+.page-list::-webkit-scrollbar {
+  display: none;
+}
+
+.page-thumb {
+  width: 56px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--bg-canvas);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s;
-  font-family: inherit;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
 }
 
-.scene-item:hover {
+.page-thumb:hover {
   border-color: var(--accent);
-  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
 }
 
-.scene-item.active {
-  background: var(--accent);
+.page-thumb.active {
   border-color: var(--accent);
-  color: #000;
+  box-shadow: 0 0 0 2px var(--accent-light), var(--shadow-md);
 }
 
-.scene-number {
+.page-number {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
 
-.scene-add {
+.page-thumb.active .page-number {
+  color: var(--accent);
+}
+
+/* Add page button */
+.page-add {
   border-style: dashed;
+  border-color: var(--border);
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-add:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.page-add svg {
+  width: 16px;
+  height: 16px;
   color: var(--text-muted);
 }
 
-.scene-add:hover {
+.page-add:hover svg {
   color: var(--accent);
-  border-color: var(--accent);
 }
 
-.scene-add svg {
-  width: 14px;
-  height: 14px;
-}
-
-.scene-actions {
+/* Bottom actions */
+.page-sidebar-actions {
+  padding: 8px 0;
   display: flex;
-  align-items: center;
-  gap: 2px;
-  margin-left: 4px;
-  padding-left: 6px;
-  border-left: 1px solid var(--border);
+  justify-content: center;
+  gap: 4px;
+  border-top: 1px solid var(--border-light);
 }
 
-.scene-action-btn {
-  width: 24px;
-  height: 24px;
+.page-action-btn {
+  width: 28px;
+  height: 28px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
@@ -95,16 +138,16 @@
   transition: all 0.15s;
 }
 
-.scene-action-btn:hover {
+.page-action-btn:hover {
   background: var(--bg-surface-hover);
   color: var(--text-secondary);
 }
 
-.scene-action-btn svg {
+.page-action-btn svg {
   width: 14px;
   height: 14px;
 }
 
-.scene-delete:hover {
+.page-delete:hover {
   color: var(--accent-record);
 }
